@@ -6,7 +6,7 @@ class Form  extends React.Component{
   state = {
       name: "",
       brand:"",
-      price: 0,
+      price: "",
       colorway: "",
       description: "",
       image_url: ""
@@ -18,20 +18,6 @@ handleChange = (event) => {
     [event.target.name]: event.target.value
   })
 }
-
-
-// handleSubmit = (event) => {
-//   event.preventDefault();
-//   fetch('http://localhost:3000/sneakers' , {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(this.state)
-//   })
-// }
-
 
 render(){
   return (
