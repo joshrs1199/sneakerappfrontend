@@ -10,9 +10,9 @@ const sneakerContainer = (props) => {
 let filteredSneakers = props.sneakers.filter(sneaker => sneaker.name.toLowerCase().includes(props.filtered.toLowerCase()))
 return (
     <div>
-      <Grid relaxed="very" columns={3}>
+      <Grid relaxed="very" columns={4}>
         {filteredSneakers.map(sneaker=>{
-          return <SneakerCard removeClick={props.removeClick} sneaker={sneaker} Image={sneaker.image_url} key={sneaker.id} shoppingCartClick={props.shoppingCartClick} />
+          return <SneakerCard removeClick={props.removeClick} sneaker={sneaker} key={sneaker.id} shoppingCartClick={props.shoppingCartClick} removeCartClick={props.removeCartClick} />
         })}
       </Grid>
     </div>
