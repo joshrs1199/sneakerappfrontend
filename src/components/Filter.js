@@ -4,7 +4,9 @@ const filter = (props) => {
 
 return (
       <div>
-        <input type="text" placeholder='Search' value={props.filtered} onChange={props.handleFilterChange} />
+        <h1>
+          <input type="text" placeholder='Search' value={props.filtered} onChange={props.handleFilterChange} />
+          </h1>
       </div>
     )
 }

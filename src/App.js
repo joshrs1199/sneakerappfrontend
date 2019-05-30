@@ -1,9 +1,12 @@
-import React from 'react';
+import React from 'react'
+// import {BrowserRouter,NavLink} from 'react-router-dom'
 import SneakerContainer from '../src/container/SneakerContainer.js';
 import CartContainer from '../src/container/CartContainer';
 import Filter from '../src/components/Filter.js'
 import NavBar from '../src/components/NavBar.js'
+// import { Route, Switch, Redirect } from 'react-router-dom';
 import Form from '../src/components/Form.js';
+import Confirmation from '../src/components/Confirmation.js';
 import './App.css';
 
 class App extends React.Component{
@@ -21,18 +24,21 @@ state = {
   sneakers: [],
   clickedSneakers: [],
   filtered: "",
-  submit: ""
 }
 
-handleSubmit(event){
-  event.preventDefault()
-  this.setState({
-    submit: event.target.value
-  })
-}
+//set state for sneakers
+//clickedSneakers is the sneakers that were clicked and added to the cartContainer
+//filtered sneakers is changing the state of the
+
+// handleSubmit(event){
+//   event.preventDefault()
+//   this.setState({
+//     submit: event.target.value
+//   })
+// }
 
 
-componentDidMount() {
+componentDidMount(){
   fetch('http://localhost:3000/sneakers')
   .then(res=>res.json())
   .then(allSneakers =>{
@@ -43,11 +49,6 @@ componentDidMount() {
 }
 
 
-handleFilterChange = (event) => {
-  this.setState({
-    filtered: event.target.value
-  })
-}
 
 handleFormSubmit = (event, shoeObj) => {
   event.preventDefault();
@@ -67,10 +68,10 @@ handleFormSubmit = (event, shoeObj) => {
   })
 }
 
-removeClick = (sneakerID) => {
+buyNowClick = (sneakerID) => {
   let sneaker = this.state.sneakers.find(sneaker => sneaker.id === sneakerID)
   let updatedSneakerList = this.state.sneakers.filter(sneaker => sneaker.id !== sneakerID)
-  let filteredSneaker = this.state.clickedSneakers.filter(sneaker => sneaker.id !== sneakerID)
+  // let filteredSneaker = this.state.clickedSneakers.filter(sneaker => sneaker.id !== sneakerID)
   fetch(`http://localhost:3000/sneakers/${sneakerID}`, {
     method: 'DELETE',
     headers: {
@@ -85,9 +86,6 @@ removeClick = (sneakerID) => {
       sneakers: updatedSneakerList
     })
   })
-  this.setState({
-    clickedSneakers: filteredSneaker,
-  })
 }
 
 shoppingCartClick = (sneakerid) => {
@@ -97,29 +95,33 @@ shoppingCartClick = (sneakerid) => {
   }))
 }
 
-removeCartClick = (sneakerId) => {
+
+handleFilterChange = (event) => {
+  this.setState({
+    filtered: event.target.value
+  })
+}
+
+handleClick = (sneakerId) => {
   let filteredSneaker = this.state.clickedSneakers.filter(sneaker => sneaker.id !== sneakerId)
   this.setState({
     clickedSneakers: filteredSneaker
   })
 }
 
- clickedNavBar = (event) =>{
-  if(event.target.id=== "sell"){
-    console.log("clicked sell")
-  }
+handleAddInCart = (sneakerId) => {
+  console.log(sneakerId)
 }
-
-//add a div to return method then render based on click
 
 render(){
 
 return (
-    <div className="App" style={{ backgroundImage: "url(https://i.redd.it/7jvo616rdba11.jpg)" }} >
-    <NavBar clickedNavBar={this.clickedNavBar} />
-        <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
-        <SneakerContainer sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} removeClick={this.removeClick}/>
-        <CartContainer clickedSneakers={this.state.clickedSneakers} removeCartClick={this.removeCartClick} removeClick={this.removeClick}/>
+
+    <div className="App" style={{ backgroundImage: "url()" }} >
+      <NavBar clickedNavBar={this.clickedNavBar}/>
+    <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
+        <SneakerContainer handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
+        <CartContainer handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
       <h3>
         <Form handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
       </h3>
@@ -129,3 +131,5 @@ return (
 }
 
 export default App;
+
+// <NavBar clickedNavBar={this.clickedNavBar} />

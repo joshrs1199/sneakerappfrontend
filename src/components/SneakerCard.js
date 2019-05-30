@@ -11,7 +11,7 @@ const sneakerCard = (props) => {
           <h4>{props.sneaker.description}</h4>
           <h4>Colorway: {props.sneaker.colorway.toUpperCase()} </h4>
         <Button id="button" onClick={() => props.shoppingCartClick(props.sneaker.id)} key={props.sneaker.id} variant="outline-primary">Add To Cart</Button>
-        <Button id="button" onClick={() =>props.removeClick(props.sneaker.id)} variant="outline-primary">Buy Now</Button>
+        <Button id="button" onClick={() =>props.handleClick(props.sneaker.id)} variant="outline-primary">Remove</Button>
         </Grid.Column>
   )
 }
