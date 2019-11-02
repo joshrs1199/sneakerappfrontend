@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #1245;
+  color: #333;
 }
 
 .App-logo {
@@ -19,6 +21,19 @@
   color: white;
 }
 
+#main {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-width: 320px;
+    background: #fff;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.4285em;
+    color: rgba(0,0,0,.87);
+    font-smoothing: antialiased;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -33,7 +48,14 @@
 }
 
 /* resets */
-body { margin:0px; padding:0px; }
+body { margin:0px;
+       padding:0px;
+       background-color: #1245;
+       background: #1245;
+       color: #1245;
+       font-family: helvetica;
+       line-height: 1.6;
+}
 
 /* main */
 header {
@@ -70,7 +92,6 @@ nav {
     width: 100%;
     height: 60px;
     background: #292f36;
-    postion: fixed;
     z-index: 10;
 }
 
@@ -105,11 +126,13 @@ nav ul li a {
 }
 
 /* demo content */
-body {
-    color: #292f36;
+/* body { */
+    /* color: #1245;
     font-family: helvetica;
     line-height: 1.6;
-}
+    background: #1245;
+    background-color: #1245; */
+/* } */
 .content{
     margin: 0 auto;
     padding: 4rem 0;

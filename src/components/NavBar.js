@@ -1,5 +1,4 @@
 import { Menu } from "semantic-ui-react";
-import {BrowserRouter as Router,  } from 'react-router-dom';
 
 import React from 'react';
 

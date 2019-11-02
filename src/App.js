@@ -133,28 +133,36 @@ handleAddInCart = (sneakerId) => {
 whatPageToRender = () => {
   switch(this.state.page) {
     case "checkout":
-    return <CartContainer status={this.state.page} handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
+    return <CartContainer className="App" status={this.state.page} handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
     case "shop":
     return <div>
-              <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
-           <SneakerContainer status={this.state.page} handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
+           <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
+           <SneakerContainer className="App" status={this.state.page} handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
            </div>
    case "sell":
-   return <h3>
-        <Form handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
-      </h3>
+   return <Form className="App" handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
+
       default:
 
   }
 }
 
+sortByPrice = () => {
+
+let copySneaker = [...this.state.sneakers]
+
+copySneaker.sort((a, b) => (a.price > b.price) ? 1 : -1)
+
+
+  this.setState({
+    sneakers: copySneaker
+  })
+}
 
 // When the user scrolls the page, execute myFunction
 
 
  render(){
-
-
  return (
 
    <div className="App" style={{}} >
@@ -174,6 +182,8 @@ whatPageToRender = () => {
            </ul>
         </nav>
     </header>
+    <button onClick={this.sortByPrice} >Sort By Price</button>
+
     <section className="content">
          {
             this.whatPageToRender()

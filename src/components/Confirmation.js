@@ -9,7 +9,7 @@ const Confirmation = (props) => {
       <div>
         <h3>
           Your Total is:
-          {props.clickedSneakers.map((sneaker) =>{
+          {props.clickedSneakers.map((sneaker) => {
             total += sneaker.price
           })}
         </h3>
