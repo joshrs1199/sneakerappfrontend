@@ -1,12 +1,9 @@
 import React from 'react'
-// import {BrowserRouter,NavLink} from 'react-router-dom'
 import SneakerContainer from '../src/container/SneakerContainer.js';
 import CartContainer from '../src/container/CartContainer';
 import Filter from '../src/components/Filter.js'
-import NavBar from '../src/components/NavBar.js'
-// import { Route, Switch, Redirect } from 'react-router-dom';
+// import NavBar from '../src/components/NavBar.js'
 import Form from '../src/components/Form.js';
-import Confirmation from '../src/components/Confirmation.js';
 import './App.css';
 
 class App extends React.Component{
@@ -24,19 +21,10 @@ state = {
   sneakers: [],
   clickedSneakers: [],
   filtered: "",
+  filterBy: "",
+  checkout: false,
+  page: "shop"
 }
-
-//set state for sneakers
-//clickedSneakers is the sneakers that were clicked and added to the cartContainer
-//filtered sneakers is changing the state of the
-
-// handleSubmit(event){
-//   event.preventDefault()
-//   this.setState({
-//     submit: event.target.value
-//   })
-// }
-
 
 componentDidMount(){
   fetch('http://localhost:3000/sneakers')
@@ -90,9 +78,19 @@ buyNowClick = (sneakerID) => {
 
 shoppingCartClick = (sneakerid) => {
   let sneaker = this.state.sneakers.find(sneaker => sneaker.id === sneakerid)
-  this.setState(prevState => ({
-    clickedSneakers: [...prevState.clickedSneakers, sneaker]
-  }))
+
+  for(let oneSneaker of this.state.clickedSneakers) {
+    if(sneaker === oneSneaker) {
+      alert('Already Bought')
+    }
+  }
+  if(this.state.clickedSneakers.includes(sneaker)) {
+    return;
+  } else {
+    this.setState({
+      clickedSneakers: [...this.state.clickedSneakers, sneaker]
+    })
+  }
 }
 
 
@@ -109,27 +107,116 @@ handleClick = (sneakerId) => {
   })
 }
 
+
+clickedNavBar = (event) => {
+
+  if(event.target.name === "shop") {
+    this.setState({
+      page: "shop"
+    })
+  }
+  if(event.target.name === "sell") {
+    this.setState({
+      page: "sell"
+    })
+  }
+  if(event.target.name === "checkout") {
+    this.setState({
+      page: "checkout"
+    })
+  }
+}
 handleAddInCart = (sneakerId) => {
   console.log(sneakerId)
 }
 
-render(){
-
-return (
-
-    <div className="App" style={{ backgroundImage: "url()" }} >
-      <NavBar clickedNavBar={this.clickedNavBar}/>
-    <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
-        <SneakerContainer handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
-        <CartContainer handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
-      <h3>
+whatPageToRender = () => {
+  switch(this.state.page) {
+    case "checkout":
+    return <CartContainer status={this.state.page} handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
+    case "shop":
+    return <div>
+              <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
+           <SneakerContainer status={this.state.page} handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
+           </div>
+   case "sell":
+   return <h3>
         <Form handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
       </h3>
-  </div>
-    );
+      default:
+
   }
 }
 
-export default App;
 
-// <NavBar clickedNavBar={this.clickedNavBar} />
+// When the user scrolls the page, execute myFunction
+
+
+ render(){
+
+
+ return (
+
+   <div className="App" style={{}} >
+     <header>
+       <div className="header-banner">
+           <h1>Dope Kicks</h1>
+       </div>
+         <div className="clear"></div>
+           <nav>
+             <div className="site-title">Sneakers</div>
+
+           <ul>
+             <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)} >Shop</a></li>
+           <li><a href="#sell" name="sell" onClick={(event) => this.clickedNavBar(event)}>Sell</a></li>
+         <li><a href="#checkout" name="checkout" onClick={(event) => this.clickedNavBar(event)}>Checkout</a></li>
+
+           </ul>
+        </nav>
+    </header>
+    <section className="content">
+         {
+            this.whatPageToRender()
+         }
+       </section>
+ </div>
+     );
+   }
+ }
+
+export default App;
+//
+//
+// <header>
+//     <div class="header-banner">
+//         <h1>Visit Finland</h1>
+//     </div>
+//     <div class="clear"></div>
+//     <nav>
+//         <div class="site-title">Finland</div>
+//         <ul>
+//             <li><a href="/archive">Archive</a></li>
+//             <li><a href="/events">Events</a></li>
+//             <li><a href="/contact">Contact</a></li>
+//         <ul>
+//     </nav>
+// </header>
+
+
+// <NavBar class="header" id="myHeader" clickedNavBar={this.clickedNavBar}/>
+
+//
+// {
+//
+//   this.state.checkout ?
+//   <CartContainer handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
+//   :
+//   <div>
+//   <NavBar clickedNavBar={this.clickedNavBar}/>
+//   <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
+//     <SneakerContainer handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
+//   <h3>
+//     <Form handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
+//   </h3>
+// </div>
+// }

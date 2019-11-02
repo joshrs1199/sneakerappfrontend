@@ -16,7 +16,10 @@ return(
                             sneaker={sneaker}
                             key={`${sneaker.id} - ${index}`}
                             buyNowClick={props.buyNowClick}
-                            clickedSneakers={props.clickedSneakers}/>
+                            clickedSneakers={props.clickedSneakers}
+                            status={props.status}
+                            />
+
                               }
                           )
 }

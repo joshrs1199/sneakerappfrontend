@@ -9,13 +9,11 @@ const NavBar = (props)=> {
 
 
     return (
-    <Router>
-      <Menu fluid widths={3}>
-        <Menu.Item id="shop" onClick={props.clickedNavBar} name='Shop' />
-        <Menu.Item id="sell" onClick={props.clickedNavBar} name='Sell'  />
-        <Menu.Item id="checkout" onClick={props.clickedNavBar} name='Checkout' />
+      <Menu class="header" id="myHeader" fluid widths={3}>
+        <Menu.Item id="shop" onClick={(event) => props.clickedNavBar(event)} name='Shop' />
+        <Menu.Item id="sell" onClick={(event) => props.clickedNavBar(event)} name='Sell'  />
+        <Menu.Item id="checkout" onClick={(event) => props.clickedNavBar(event)} name='Checkout' />
       </Menu>
-    </Router>
     )
   }
   export default NavBar;
