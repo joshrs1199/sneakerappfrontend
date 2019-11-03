@@ -147,18 +147,23 @@ whatPageToRender = () => {
   }
 }
 
-sortByPrice = () => {
 
+sortCheap = () => {
 let copySneaker = [...this.state.sneakers]
-
 copySneaker.sort((a, b) => (a.price > b.price) ? 1 : -1)
-
-
   this.setState({
     sneakers: copySneaker
   })
 }
 
+
+sortExp = () => {
+let copySneaker = [...this.state.sneakers]
+copySneaker.sort((a, b) => (a.price < b.price) ? 1 : -1)
+  this.setState({
+    sneakers: copySneaker
+  })
+}
 // When the user scrolls the page, execute myFunction
 
 
@@ -175,14 +180,16 @@ copySneaker.sort((a, b) => (a.price > b.price) ? 1 : -1)
              <div className="site-title">Sneakers</div>
 
            <ul>
-             <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)} >Shop</a></li>
+             <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)} >Shop</a></li> 
            <li><a href="#sell" name="sell" onClick={(event) => this.clickedNavBar(event)}>Sell</a></li>
          <li><a href="#checkout" name="checkout" onClick={(event) => this.clickedNavBar(event)}>Checkout</a></li>
 
            </ul>
         </nav>
-    </header>
-    <button onClick={this.sortByPrice} >Sort By Price</button>
+    </header><br/>
+    <button style={{"background-color": "#a9abae" }}onClick={this.sortCheap} >Sort Cheapest to Highest</button>
+    <button style={{"background-color": "#a9abae" }}onClick={this.sortExp} >Sort Highest to Cheapest</button>
+
 
     <section className="content">
          {

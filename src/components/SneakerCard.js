@@ -10,11 +10,11 @@ const sneakerCard = (props) => {
           <h3>Price: ${props.sneaker.price}</h3>
           <h4>{props.sneaker.description}</h4>
           <h4>Colorway: {props.sneaker.colorway.toUpperCase()} </h4>
-          {props.status === "checkout" ? null
+          {props.status === "checkout" ? <Button id="button" onClick={() =>props.handleClick(props.sneaker.id)} variant="outline-primary">Remove</Button>
+
             :
             <Button id="button" onClick={() => props.shoppingCartClick(props.sneaker.id)} key={props.sneaker.id} variant="outline-primary">Add To Cart</Button>
               }
-        <Button id="button" onClick={() =>props.handleClick(props.sneaker.id)} variant="outline-primary">Remove</Button>
         </Grid.Column>
   )
 }
