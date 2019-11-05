@@ -114,9 +114,17 @@ a {
   font-size: 2.5rem;
 }
 
-button {
-  height: 50px;
-  font-size: 2rem;
+.button {
+  height: 40px;
+  font-size: 1.5rem;
+  background-color: #a9abae;
+}
+
+#cart-button {
+    height: 50px;
+    font-size: 2rem;
+    background-color: #a9abae;
+    border-color: red;
 }
 
 nav ul {
@@ -150,6 +158,12 @@ nav ul li a {
     padding: 4rem 0;
     width: 960px;
     max-width: 100%;
+}
+
+#simple-button {
+  background-color: white;
+  color: black;
+  line-height: 10px;
 }
 article {
     float: left;

@@ -161,6 +161,8 @@ whatPageToRender = () => {
     return <CartContainer renderCheckout={this.handleCheckoutPage}className="App" status={this.state.page} handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
     case "shop":
     return <div>
+        <button className="button" onClick={this.sortCheap} >Sort Cheapest to Highest</button>
+        <button className="button" onClick={this.sortExp} >Sort Highest to Cheapest</button><br/><br/>
            <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
            <SneakerContainer className="App" status={this.state.page} handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
            </div>
@@ -212,17 +214,14 @@ copySneaker.sort((a, b) => (a.price < b.price) ? 1 : -1)
          <div className="clear"></div>
            <nav>
              <div className="site-title">Sneakers</div>
-
            <ul>
-             <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)} >Shop</a></li>
-           <li><a href="#sell" name="sell" onClick={(event) => this.clickedNavBar(event)}>Sell</a></li>
-         <li><a href="#checkout" name="checkout" onClick={(event) => this.clickedNavBar(event)}>Checkout</a></li>
-
+            <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)}>Shop </a></li>
+            <li><a href="#sell" name="sell" onClick={(event) => this.clickedNavBar(event)}>Sell </a></li>
+            <li><a href="#checkout" name="checkout" onClick={(event) => this.clickedNavBar(event)}>Checkout</a></li>
            </ul>
         </nav>
     </header><br/>
-  <button style={{"backgroundColor": "#a9abae" }} onClick={this.sortCheap} >Sort Cheapest to Highest</button>
-    <button style={{"backgroundColor": "#a9abae" }} onClick={this.sortExp} >Sort Highest to Cheapest</button>
+
 
 
     <section className="content">

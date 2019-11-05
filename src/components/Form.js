@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Label } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 
 
 class Form  extends React.Component{
@@ -36,8 +36,8 @@ render(){
         <Input label={{ icon: 'write' }} labelPosition='left' type='text' placeholder='Enter Size/Description' value={this.state.description} onChange={this.handleChange} name="description">
           </Input><br/>
         <Input label={{ icon: 'file image' }} labelPosition='left' type='text' placeholder='Enter Image URL' value={this.state.image_url} onChange={this.handleChange} name="image_url">
-          </Input><br/>
-        <button style={{"backgroundColor": "#a9abae" }} onClick={(event)=> this.props.handleFormSubmit(event, this.state)} >Post For $ale</button>
+        </Input><br/><br/>
+        <button className="button" onClick={(event)=> this.props.handleFormSubmit(event, this.state)} >Post For $ale</button>
     </div>
     )
   }
