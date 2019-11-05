@@ -2,7 +2,9 @@ import React from 'react'
 import SneakerContainer from '../src/container/SneakerContainer.js';
 import CartContainer from '../src/container/CartContainer';
 import Filter from '../src/components/Filter.js'
-// import NavBar from '../src/components/NavBar.js'
+import FinalCheckout from '../src/components/FinalCheckout.js'
+import {Elements, StripeProvider} from 'react-stripe-elements';
+
 import Form from '../src/components/Form.js';
 import './App.css';
 
@@ -12,7 +14,7 @@ class App extends React.Component{
     width: '100px',
     padding: '12px',
     margin: '0 6px 6px',
-    background: 'blue',
+    // backgroundColor: 'blue',
     textDecoration: 'none',
     color: 'white',
   }
@@ -22,8 +24,8 @@ state = {
   clickedSneakers: [],
   filtered: "",
   filterBy: "",
-  checkout: false,
-  page: "shop"
+  page: "shop",
+  total: 0
 }
 
 componentDidMount(){
@@ -54,6 +56,11 @@ handleFormSubmit = (event, shoeObj) => {
       sneakers: [...prevState.sneakers, sneaker]
     }))
   })
+  .then(
+    this.setState({
+      page: "shop"
+    })
+  )
 }
 
 buyNowClick = (sneakerID) => {
@@ -75,6 +82,8 @@ buyNowClick = (sneakerID) => {
     })
   })
 }
+
+
 
 shoppingCartClick = (sneakerid) => {
   let sneaker = this.state.sneakers.find(sneaker => sneaker.id === sneakerid)
@@ -126,14 +135,30 @@ clickedNavBar = (event) => {
     })
   }
 }
-handleAddInCart = (sneakerId) => {
-  console.log(sneakerId)
+
+handleCheckoutPage = (price) => {
+  if (this.state.clickedSneakers.length === 0 ) {
+    alert('Nothing In Cart!')
+  }
+  else {
+    this.setState({
+      total:price,
+      page: "finalCheckout"
+    })
+  }
+}
+
+backHome = () => {
+  this.setState({
+    page: "shop",
+    clickedSneakers: []
+  })
 }
 
 whatPageToRender = () => {
   switch(this.state.page) {
     case "checkout":
-    return <CartContainer className="App" status={this.state.page} handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
+    return <CartContainer renderCheckout={this.handleCheckoutPage}className="App" status={this.state.page} handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
     case "shop":
     return <div>
            <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
@@ -141,7 +166,15 @@ whatPageToRender = () => {
            </div>
    case "sell":
    return <Form className="App" handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
-
+   case "finalCheckout":
+   return       <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+        <div className="example">
+          <h1>Enter Payment And Shipping Details</h1>
+          <Elements>
+            <FinalCheckout total={this.state.total} backHome={this.backHome} />
+          </Elements>
+        </div>
+      </StripeProvider>
       default:
 
   }
@@ -168,6 +201,7 @@ copySneaker.sort((a, b) => (a.price < b.price) ? 1 : -1)
 
 
  render(){
+   console.log(this.state.total)
  return (
 
    <div className="App" style={{}} >
@@ -180,15 +214,15 @@ copySneaker.sort((a, b) => (a.price < b.price) ? 1 : -1)
              <div className="site-title">Sneakers</div>
 
            <ul>
-             <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)} >Shop</a></li> 
+             <li><a href="#shop" name="shop" onClick={(event) => this.clickedNavBar(event)} >Shop</a></li>
            <li><a href="#sell" name="sell" onClick={(event) => this.clickedNavBar(event)}>Sell</a></li>
          <li><a href="#checkout" name="checkout" onClick={(event) => this.clickedNavBar(event)}>Checkout</a></li>
 
            </ul>
         </nav>
     </header><br/>
-    <button style={{"background-color": "#a9abae" }}onClick={this.sortCheap} >Sort Cheapest to Highest</button>
-    <button style={{"background-color": "#a9abae" }}onClick={this.sortExp} >Sort Highest to Cheapest</button>
+  <button style={{"backgroundColor": "#a9abae" }} onClick={this.sortCheap} >Sort Cheapest to Highest</button>
+    <button style={{"backgroundColor": "#a9abae" }} onClick={this.sortExp} >Sort Highest to Cheapest</button>
 
 
     <section className="content">
@@ -202,38 +236,3 @@ copySneaker.sort((a, b) => (a.price < b.price) ? 1 : -1)
  }
 
 export default App;
-//
-//
-// <header>
-//     <div class="header-banner">
-//         <h1>Visit Finland</h1>
-//     </div>
-//     <div class="clear"></div>
-//     <nav>
-//         <div class="site-title">Finland</div>
-//         <ul>
-//             <li><a href="/archive">Archive</a></li>
-//             <li><a href="/events">Events</a></li>
-//             <li><a href="/contact">Contact</a></li>
-//         <ul>
-//     </nav>
-// </header>
-
-
-// <NavBar class="header" id="myHeader" clickedNavBar={this.clickedNavBar}/>
-
-//
-// {
-//
-//   this.state.checkout ?
-//   <CartContainer handleClick={this.handleClick} clickedSneakers={this.state.clickedSneakers} buyNowClick={this.buyNowClick} shoppingCartClick={this.handleAddInCart}/>
-//   :
-//   <div>
-//   <NavBar clickedNavBar={this.clickedNavBar}/>
-//   <Filter filtered={this.state.filtered} handleFilterChange={this.handleFilterChange} />
-//     <SneakerContainer handleClick={this.handleClick} sneakers={this.state.sneakers} shoppingCartClick={this.shoppingCartClick} filtered={this.state.filtered} buyNowClick={this.buyNowClick}/>
-//   <h3>
-//     <Form handleFormSubmit={this.handleFormSubmit} updateShoeStore={this.updateShoeStore} allSneakers={this.sneakers}/>
-//   </h3>
-// </div>
-// }

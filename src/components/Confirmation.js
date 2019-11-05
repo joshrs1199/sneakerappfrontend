@@ -14,7 +14,7 @@ const Confirmation = (props) => {
           })}
         </h3>
           <h1>${total}</h1>
-          <button>Pay Now</button>
+          <button onClick={()=> props.renderCheckout(total)}>Pay Now</button>
       </div>
     );
   }

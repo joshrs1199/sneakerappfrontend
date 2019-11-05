@@ -20,12 +20,14 @@ return(
                             status={props.status}
                             />
 
+
                               }
+
                           )
 }
     </Grid>
     <h3>
-    <Confirmation clickedSneakers={props.clickedSneakers}/>
+    <Confirmation renderCheckout={props.renderCheckout} clickedSneakers={props.clickedSneakers}/>
     </h3>
   </div>
 )

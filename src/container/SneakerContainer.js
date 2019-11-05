@@ -5,7 +5,6 @@ import { Grid } from "semantic-ui-react";
 
 
 
-
 const sneakerContainer = (props) => {
 
 let filteredSneakers = props.sneakers.filter(sneaker => sneaker.name.toLowerCase().includes(props.filtered.toLowerCase()))
